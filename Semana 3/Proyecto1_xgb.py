@@ -3,7 +3,7 @@ from xgboost import XGBRegressor
 import joblib
 
 # Cargar datos
-dataTraining = pd.read_csv('../datasets/dataTrain_carListings.zip')
+dataTraining = pd.read_csv('./datasets/dataTrain_carListings.zip')
 
 # Pre procesar datos
 # Pre procesar los datos

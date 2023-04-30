@@ -4,9 +4,31 @@ import pandas as pd
 import joblib
 import sys
 import os
-from Proyecto1_xgb import X_total, top10_estados
 
-X_total = X_total.drop('Price', axis=1, inplace=True)
+#dataTraining = pd.read_csv('https://raw.githubusercontent.com/davidzarruk/MIAD_ML_NLP_2023/main/datasets/dataTrain_carListings.zip')
+# Leer archivo dataTrain_carListings
+dataTraining = pd.read_csv('./datasets/dataTrain_carListings.zip')
+
+# Pre procesar datos
+# Pre procesar los datos
+top10_estados = list(dataTraining['State'].value_counts().head(10).index)
+
+#Agrupar los estados que no estan en el top 10 en un solo estado
+dataTraining['State'] = dataTraining['State'].apply(lambda x: x if x in top10_estados else 'Other')
+
+# Quitar espacios de la columna State
+dataTraining['State'] = dataTraining['State'].apply(lambda x: x.strip())
+
+# Convertir variables categóricas
+dataTraining['State'] = dataTraining['State'].astype('category')
+dataTraining['Make'] = dataTraining['Make'].astype('category')
+dataTraining['Model'] = dataTraining['Make'].astype('category')
+
+# Crear variables dummies
+dataTraining = pd.get_dummies(dataTraining, columns=['State', 'Make', 'Model'], drop_first=True)
+
+# Definir X
+X_total = dataTraining.drop(['Price'], axis=1)
 
 def predict_price(year, mileage, state, make, model):
 
