@@ -5,9 +5,9 @@ import joblib
 import sys
 import os
 
-#dataTraining = pd.read_csv('https://raw.githubusercontent.com/davidzarruk/MIAD_ML_NLP_2023/main/datasets/dataTrain_carListings.zip')
+dataTraining = pd.read_csv('https://raw.githubusercontent.com/davidzarruk/MIAD_ML_NLP_2023/main/datasets/dataTrain_carListings.zip')
 # Leer archivo dataTrain_carListings
-dataTraining = pd.read_csv('./datasets/dataTrain_carListings.zip')
+#dataTraining = pd.read_csv('./datasets/dataTrain_carListings.zip')
 
 # Pre procesar datos
 # Pre procesar los datos
