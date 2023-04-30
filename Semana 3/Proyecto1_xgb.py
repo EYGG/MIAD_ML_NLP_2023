@@ -9,8 +9,11 @@ dataTraining = pd.read_csv('./datasets/dataTrain_carListings.zip')
 # Pre procesar los datos
 top10_estados = list(dataTraining['State'].value_counts().head(10).index)
 
-#Agrupar los estados que no estan en el top 15 en un solo estado
+#Agrupar los estados que no estan en el top 10 en un solo estado
 dataTraining['State'] = dataTraining['State'].apply(lambda x: x if x in top10_estados else 'Otro')
+
+# Quitar espacios de la columna State
+dataTraining['State'] = dataTraining['State'].apply(lambda x: x.strip())
 
 # Convertir variables categóricas
 dataTraining['State'] = dataTraining['State'].astype('category')
@@ -21,9 +24,9 @@ dataTraining['Model'] = dataTraining['Make'].astype('category')
 dataTraining = pd.get_dummies(dataTraining, columns=['State', 'Make', 'Model'], drop_first=True)
 
 # Definir parámetros
-estimators = 160
+estimators = 220
 learning_rate = 0.1
-max_depth = 122
+max_depth = 20
 weight = 34
 
 # Definir X y

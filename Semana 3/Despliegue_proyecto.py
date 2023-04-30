@@ -4,25 +4,23 @@ import pandas as pd
 import joblib
 import sys
 import os
+from Proyecto1_xgb import X_total, top10_estados
 
 def predict_price(year, mileage, state, make, model):
 
     reg = joblib.load(os.path.dirname(__file__) + '/xgb.pkl') 
 
-    x_test = pd.DataFrame()
-    x_test['year'] = year
-    x_test['mileage'] = mileage
-    x_test['state'] = state
-    x_test['make'] = make
-    x_test['model'] = model
+    x_test = pd.DataFrame(columns=X_total.columns)
+    x_test.loc[0,'Year'] = year
+    x_test.loc[0,'Mileage'] = mileage
+    if state in top10_estados:
+        x_test.loc[0,'State_'+state] = 1
+    else:
+        x_test.loc[0,'State_Other'] = 1
+    x_test.loc[0,'Make_'+make] = 1
+    x_test.loc[0,'Model_'+model] = 1
 
-    # Convertir en categorias
-    x_test['state'] = x_test['state'].astype('category')
-    x_test['make'] = x_test['make'].astype('category')
-    x_test['model'] = x_test['model'].astype('category')
-
-    # Crear variables dummies
-    x_test = pd.get_dummies(x_test, columns=['state', 'make', 'model'], drop_first=True)
+    x_test.fillna(0, inplace=True)
 
     # Predecir
     y_pred = reg.predict(x_test)

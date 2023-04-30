@@ -3,8 +3,10 @@ from flask_restx import Api, Resource, fields
 import joblib
 from Despliegue_proyecto import predict_price
 
-app = Flask.Flask(__name__)
-api = Api(app)
+app = Flask(__name__)
+api = Api(app, version='1.0',
+          title= 'Predictor de precios de autos',
+          description= 'API para predecir el precio de carros usados usando un modelo XGBoost')
 
 ns = api.namespace('predict', description='Predicción de precios de vehículos')
 
@@ -12,7 +14,6 @@ parser = api.parser()
 
 parser.add_argument('year', type=int, required=True, help='Año del vehículo', location='args')
 parser.add_argument('mileage', type=int, required=True, help='Kilometraje del vehículo', location='args')
-
 parser.add_argument('state', type=str, required=True, help='Estado del vehículo', location='args')
 parser.add_argument('make', type=str, required=True, help='Marca del vehículo', location='args')
 parser.add_argument('model', type=str, required=True, help='Modelo del vehículo', location='args')
@@ -40,6 +41,6 @@ class CarPricingApi(Resource):
             }, 200
         
 if __name__ == '__main__':
-    app.run(debug=True, use_reloader=False, host='0.0.0.0', port=8888)
+    app.run(debug=True, use_reloader=False, host='0.0.0.0', port=8080)
     
         
