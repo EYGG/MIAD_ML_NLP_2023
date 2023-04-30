@@ -6,6 +6,8 @@ import sys
 import os
 from Proyecto1_xgb import X_total, top10_estados
 
+X_total = X_total.drop('Price', axis=1, inplace=True)
+
 def predict_price(year, mileage, state, make, model):
 
     reg = joblib.load(os.path.dirname(__file__) + '/xgb.pkl') 

@@ -10,7 +10,7 @@ dataTraining = pd.read_csv('../datasets/dataTrain_carListings.zip')
 top10_estados = list(dataTraining['State'].value_counts().head(10).index)
 
 #Agrupar los estados que no estan en el top 10 en un solo estado
-dataTraining['State'] = dataTraining['State'].apply(lambda x: x if x in top10_estados else 'Otro')
+dataTraining['State'] = dataTraining['State'].apply(lambda x: x if x in top10_estados else 'Other')
 
 # Quitar espacios de la columna State
 dataTraining['State'] = dataTraining['State'].apply(lambda x: x.strip())
