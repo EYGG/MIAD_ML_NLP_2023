@@ -1,4 +1,4 @@
-import flask as Flask
+from flask import Flask
 from flask_restx import Api, Resource, fields
 import joblib
 from Despliegue_proyecto import predict_price
